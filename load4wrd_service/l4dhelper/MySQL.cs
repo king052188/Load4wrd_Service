@@ -3,37 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace load4wrd_service
+namespace l4dhelper.Data.MySqlClient
 {
-    public class MySQL
+    public class MySqlQuery
     {
-        static MySqlClient db;
-
-        public static string connStr { get; set; }
+        internal static MySqlClient db;
         
+        internal static string host { get; set; }
+        internal static string port { get; set; }
+        internal static string username { get; set; }
+        internal static string password { get; set; }
+        internal static string database { get; set; }
+
+        public MySqlQuery(MySqlClient mysqlClient)
+        {
+            db = mysqlClient;
+        }
+
         public static bool select_bool(string query)
         {
-            MySqlClient.ConnectionString = connStr;
-            db = new MySqlClient();
             var result = db.Select(query);
             return result;
         }
 
         public static DataTable select_dt(string query)
         {
-            MySqlClient.ConnectionString = connStr;
-            db = new MySqlClient();
             var result = db.DataTable(query);
             return result;
         }
 
         public static Int64 select_int64(string query)
         {
-            MySqlClient.ConnectionString = connStr;
-            db = new MySqlClient();
             var result = db.Select_ReturnInt(query);
             return result;
         }
@@ -42,8 +46,6 @@ namespace load4wrd_service
         {
             try
             {
-                MySqlClient.ConnectionString = connStr;
-                db = new MySqlClient();
                 var result = db.Execute(query);
                 return result;
             }
@@ -57,8 +59,15 @@ namespace load4wrd_service
     public class MySqlClient
     {
         MySqlConnection mysqlCon;
+
         public static Int64 Id { get; set; }
+
         public static string ConnectionString { get; set; }
+
+        public MySqlClient(string host, string port, string username, string password, string database)
+        {
+            ConnectionString = "Server=" + host + "; Port=" + port + "; Uid=" + username + "; Password=" + password + "; Database=" + database + ";";
+        }
 
         public static Int64 Count(DataTable dt)
         {
@@ -242,6 +251,7 @@ namespace load4wrd_service
         public DataTable DataTable(string query)
         {
             DataTable dTable = new DataTable("DataTable");
+            
             using (var mysqlCon = Connect())
             {
                 using (MySqlDataAdapter mysqlDa = new MySqlDataAdapter(query, mysqlCon))
