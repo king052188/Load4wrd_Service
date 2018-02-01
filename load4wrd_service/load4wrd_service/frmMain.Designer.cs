@@ -38,6 +38,7 @@
             this.btnSettings = new System.Windows.Forms.PictureBox();
             this.pbServiceStatus = new System.Windows.Forms.PictureBox();
             this.btnPower = new System.Windows.Forms.PictureBox();
+            this.lblLabelStatus = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSettings)).BeginInit();
@@ -136,11 +137,21 @@
             this.btnPower.TabStop = false;
             this.btnPower.Click += new System.EventHandler(this.btnPower_Click);
             // 
+            // lblLabelStatus
+            // 
+            this.lblLabelStatus.Location = new System.Drawing.Point(67, 259);
+            this.lblLabelStatus.Name = "lblLabelStatus";
+            this.lblLabelStatus.Size = new System.Drawing.Size(383, 40);
+            this.lblLabelStatus.TabIndex = 6;
+            this.lblLabelStatus.Text = "label3";
+            this.lblLabelStatus.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(514, 322);
+            this.Controls.Add(this.lblLabelStatus);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnSettings);
@@ -178,5 +189,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Label lblLabelStatus;
     }
 }

@@ -14,14 +14,16 @@ namespace load4wrd_service
 {
     public partial class frmSettings : Form
     {
-        RestartEvent.RestartEventHandler RestartEvent;
+        public delegate void RestartEventHandler(object sender, RestartArgs e);
+
+        public event RestartEventHandler RestartProceed;
 
         internal Settings st;
 
         public frmSettings()
         {
             InitializeComponent();
-
+            
             st = new Settings();
             txtHost.Text = st.db_host;
             txtPort.Text = st.db_port;
@@ -39,15 +41,6 @@ namespace load4wrd_service
         private void frmSettings_Closing(object sender, FormClosingEventArgs e)
         {
             Restart.Proceed = false;
-
-            st.db_host = txtHost.Text;
-            st.db_port = txtPort.Text;
-            st.db_username = txtUsername.Text;
-            st.db_password = txtPassword.Text;
-            st.db_database = txtDatabase.Text;
-            st.api_webhook = txtWebhook.Text;
-            st.Save();
-            
             if(st.db_host != txtHost.Text)
             {
                 do_(true);
@@ -86,9 +79,16 @@ namespace load4wrd_service
             Restart.Proceed = is_restart;
             this.Dispose();
             this.Close();
-            if(is_restart)
+            if (is_restart)
             {
-                RestartEvent(this, new RestartArgs());
+                st = new Settings();
+                st.db_host = txtHost.Text;
+                st.db_port = txtPort.Text;
+                st.db_username = txtUsername.Text;
+                st.db_password = txtPassword.Text;
+                st.db_database = txtDatabase.Text;
+                st.api_webhook = txtWebhook.Text;
+                st.Save();
             }
         }
     }

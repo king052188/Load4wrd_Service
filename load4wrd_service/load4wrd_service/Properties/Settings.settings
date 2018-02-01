@@ -18,7 +18,7 @@
       <Value Profile="(Default)">kpadb_ptxt</Value>
     </Setting>
     <Setting Name="api_webhook" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://load4wrd.kpa.ph/webhook</Value>
+      <Value Profile="(Default)">http://localhost:7000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

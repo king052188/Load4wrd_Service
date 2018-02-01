@@ -85,7 +85,7 @@ namespace load4wrd_service.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://load4wrd.kpa.ph/webhook")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:7000")]
         public string api_webhook {
             get {
                 return ((string)(this["api_webhook"]));

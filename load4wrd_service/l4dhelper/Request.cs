@@ -13,17 +13,41 @@ namespace l4dhelper
 {
     public class Request
     {
+        public static bool Stop { get; set; }
         internal MySqlQuery mysqlQuery;
 
-        public Request(MySqlClient mysqlClient)
+        
+        public Request(MySqlClient mysqlClient, string api_webhook)
         {
             mysqlQuery = new MySqlQuery(mysqlClient);
-        } 
 
-        public List<Cache> get_request()
+            Json.ApiUrl = api_webhook;
+
+            Stop = false;
+        }
+
+        public void init()
+        {
+            List<Cache> requests = get_request();
+
+            foreach(Cache cache in requests)
+            {
+                string command = "LOAD " + cache.command;
+                LoadTransaction tx = Json.Send("sms", cache.from, "SMART", command);
+            }
+
+            System.Threading.Thread.Sleep(500);
+            if(Stop)
+            {
+                return;
+            }
+            init();
+        }
+
+        private List<Cache> get_request()
         {
             List<Cache> caches = new List<Cache>();
-            DataTable dt = MySqlQuery.select_dt("SELECT * FROM ptxt_cache WHERE status_ = 0;");
+            DataTable dt = MySqlQuery.select_dt("SELECT * FROM ptxt_cache WHERE status_ = 1;");
             if(dt != null)
             {
                 DataRow[] datarows = dt.Select();
@@ -31,6 +55,7 @@ namespace l4dhelper
                 {
                     Cache cache = new Cache()
                     {
+                        Id = Convert.ToInt64(dr["Id"]),
                         company_uid = Convert.ToInt64(dr["company_uid_"]),
                         from = dr["from_"].ToString(),
                         command = dr["message_"].ToString(),
@@ -50,6 +75,7 @@ namespace l4dhelper
 
     public class Cache
     {
+        public Int64 Id { get; set; }
         public Int64 company_uid { get; set; }
         public string from { get; set; }
         public string command { get; set; }

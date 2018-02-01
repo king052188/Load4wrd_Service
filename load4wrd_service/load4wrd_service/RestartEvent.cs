@@ -8,8 +8,6 @@ namespace load4wrd_service
 {
     public class RestartEvent
     {
-        public delegate void RestartEventHandler(object sender, RestartArgs e);
-
-        public event RestartEventHandler RestartProceed;
+        
     }
 }
