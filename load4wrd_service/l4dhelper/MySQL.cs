@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.Security.Cryptography;
 
 namespace l4dhelper.Data.MySqlClient
 {
@@ -321,6 +322,32 @@ namespace l4dhelper.Data.MySqlClient
                     throw new Exception(ex.Message);
                 }
             }
+        }
+    }
+
+    public static class Encryption
+    {
+        public static string Do(string input)
+        {
+            RijndaelManaged AES = new RijndaelManaged();
+            MD5CryptoServiceProvider Hash_AES = new MD5CryptoServiceProvider();
+            string encrypted = "";
+            string pass = "ABC12abc";
+            try
+            {
+                byte[] hash = new byte[32];
+                byte[] temp = Hash_AES.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(pass));
+                Array.Copy(temp, 0, hash, 0, 16);
+                Array.Copy(temp, 0, hash, 15, 16);
+                AES.Key = hash;
+                AES.Mode = CipherMode.ECB;
+                ICryptoTransform DESEncryptor = AES.CreateEncryptor();
+                byte[] buffer = ASCIIEncoding.ASCII.GetBytes(input);
+                encrypted = Convert.ToBase64String(DESEncryptor.TransformFinalBlock(buffer, 0, buffer.Length));
+            }
+            catch (Exception ex)
+            { }
+            return encrypted;
         }
     }
 }

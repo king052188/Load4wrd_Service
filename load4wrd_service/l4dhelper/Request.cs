@@ -6,6 +6,10 @@ using System.Data;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
+using System.Diagnostics;
+using System.Threading;
+using System.Security.Permissions;
+
 using l4dhelper.Data.MySqlClient;
 
 
@@ -13,35 +17,94 @@ namespace l4dhelper
 {
     public class Request
     {
-        public static bool Stop { get; set; }
+        public static bool Die { get; set; }
+
+        public static bool KeepAlive { get; set; }
+
+        public static Int64 BatchProcessPerDay { get; set; }
+
         internal MySqlQuery mysqlQuery;
 
+        internal Thread thread_a;
         
         public Request(MySqlClient mysqlClient, string api_webhook)
         {
             mysqlQuery = new MySqlQuery(mysqlClient);
 
+            thread_a = new Thread(process);
+
             Json.ApiUrl = api_webhook;
 
-            Stop = false;
+            Die = false;
+
+            KeepAlive = false;
         }
 
-        public void init()
+        public void Start()
         {
+            if(KeepAlive)
+            {
+                return;
+            }
+
+            KeepAlive = true;
+            thread_a.Start();
+        }
+
+        public void Stop()
+        {
+            if (!KeepAlive)
+            {
+                return;
+            }
+
+            KeepAlive = false;
+            thread_a.Abort();
+        }
+
+        private void process()
+        {
+            try
+            {
+                while (KeepAlive)
+                {
+                    System.Threading.Thread.Sleep(500);
+
+                    init();
+                }
+            }
+            catch (ThreadAbortException e)
+            {
+                Console.WriteLine("Exception message: {0}", e.Message);
+                Console.WriteLine("Thread Abort Exception - resetting.");
+                Thread.ResetAbort();
+            }
+        }
+
+        private void init()
+        {
+            var sw = Stopwatch.StartNew();
+
             List<Cache> requests = get_request();
 
             foreach(Cache cache in requests)
             {
                 string command = "LOAD " + cache.command;
+
                 LoadTransaction tx = Json.Send("sms", cache.from, "SMART", command);
+
+                bool save_notification = MySqlQuery.execute("DELETE FROM ptxt_cache WHERE Id = " + cache.Id + ";");
+
+                bool delete_cache = MySqlQuery.execute("DELETE FROM ptxt_cache WHERE Id = " + cache.Id + ";");
             }
 
-            System.Threading.Thread.Sleep(500);
-            if(Stop)
-            {
-                return;
-            }
-            init();
+            sw.Stop();
+
+            BatchProcessPerDay++;
+
+            decimal total_time_in_seconds = sw.ElapsedMilliseconds / 60;
+
+            Console.WriteLine("Batch: {0} and Time Executed {1} seconds", BatchProcessPerDay, total_time_in_seconds);
         }
 
         private List<Cache> get_request()
@@ -70,6 +133,7 @@ namespace l4dhelper
 
             return caches;
         }
+        
 
     }
 

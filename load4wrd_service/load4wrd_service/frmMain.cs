@@ -51,7 +51,6 @@ namespace load4wrd_service
             lblLabelStatus.Text = "MySQL connection is good.";
             mysqlQuery = new MySqlQuery(mysqlClient);
             myRequest = new Request(mysqlClient, st.api_webhook);
-            myRequest.init();
             return true;
         }
         
@@ -90,13 +89,10 @@ namespace load4wrd_service
                     lblServiceStatus.Text = "Stopped";
                     IsPowerOn = false;
                 }
-
-
             }
             else
             {
                 lblLabelStatus.Text = "MySQL disconnecting...";
-                Request.Stop = true;
                 System.Threading.Thread.Sleep(500);
                 if (mysqlClient.IsOpen )
                 {
