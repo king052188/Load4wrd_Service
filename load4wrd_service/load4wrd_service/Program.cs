@@ -16,7 +16,7 @@ namespace load4wrd_service
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmLogs());
+            Application.Run(new frmMain());
         }
     }
 }

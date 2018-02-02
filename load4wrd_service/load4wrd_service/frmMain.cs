@@ -24,12 +24,13 @@ namespace load4wrd_service
         internal MySqlQuery mysqlQuery;
 
         internal Request myRequest;
-        
-        public static bool IsPowerOn { get; set; }
 
+        public static bool IsPowerOn { get; set; }
+        
         public bool mysql_init()
         {
-            lblLabelStatus.Text = "MySQL connecting...";
+
+            lblLabelStatus.Text = "Service connecting...";
             st = new Settings();
             mysqlClient = new MySqlClient(
                 st.db_host,
@@ -42,16 +43,33 @@ namespace load4wrd_service
            bool is_true =  mysqlClient.Test_Connection();
            if(!is_true)
            {
-                Console.WriteLine("MySQL connection is incorrect.");
-                lblLabelStatus.Text = "MySQL connection is incorrect.";
+                Console.WriteLine("Service connection is incorrect.");
+                lblLabelStatus.Text = "Service connection is incorrect.";
                 return false;
            }
 
-            Console.WriteLine("MySQL connection is good.");
-            lblLabelStatus.Text = "MySQL connection is good.";
+            Console.WriteLine("Service connection is good.");
+            lblLabelStatus.Text = "Service Looks Good.";
             mysqlQuery = new MySqlQuery(mysqlClient);
             myRequest = new Request(mysqlClient, st.api_webhook);
+            myRequest.Status_Event += new Request.StatusEventHandler(Status_Logs);
+            myRequest.Start();
             return true;
+        }
+
+        public void Status_Logs(object send, StatusArgs e)
+        {
+            Control.CheckForIllegalCrossThreadCalls = false;
+            if (e.Code == 500)
+            {
+                System.Threading.Thread.Sleep(1000);
+                power();
+            }
+            lblLabelStatus.Invoke((MethodInvoker)(() =>
+            {
+                lblLabelStatus.Text = e.Message;
+            }));
+            Control.CheckForIllegalCrossThreadCalls = true;
         }
         
         public frmMain()
@@ -60,16 +78,7 @@ namespace load4wrd_service
             lblLabelStatus.Text = "";
             IsPowerOn = false;
         }
-
-        public void restart_service(object sender, RestartArgs e)
-        {
-            if (e.IsRestart)
-            {
-
-            }
-            power();
-        }
-
+        
         public void power(bool isRestart = false)
         {
             if (!IsPowerOn)
@@ -92,14 +101,15 @@ namespace load4wrd_service
             }
             else
             {
-                lblLabelStatus.Text = "MySQL disconnecting...";
+                myRequest.Stop();
+                lblLabelStatus.Text = "Service disconnecting...";
                 System.Threading.Thread.Sleep(500);
                 if (mysqlClient.IsOpen )
                 {
                     mysqlClient.Close();
                 }
                 System.Threading.Thread.Sleep(300);
-                lblLabelStatus.Text = "MySQL disconnected.";
+                lblLabelStatus.Text = "Service disconnected.";
 
                 btnPower.Image = Resources.switch_off;
                 pbServiceStatus.Image = Resources.power_button_off;
@@ -117,7 +127,6 @@ namespace load4wrd_service
         private void btnSettings_Click(object sender, EventArgs e)
         {
             frmSettings settings = new frmSettings();
-            settings.RestartProceed += new frmSettings.RestartEventHandler(restart_service);
             settings.ShowDialog();
         }
     }

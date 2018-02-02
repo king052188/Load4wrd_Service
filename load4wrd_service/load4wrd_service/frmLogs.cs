@@ -53,7 +53,6 @@ namespace load4wrd_service
             Console.WriteLine("MySQL connection is good.");
             mysqlQuery = new MySqlQuery(mysqlClient);
             myRequest = new Request(mysqlClient, st.api_webhook);
-
             myRequest.Start();
             return true;
         }

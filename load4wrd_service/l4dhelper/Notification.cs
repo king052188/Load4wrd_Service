@@ -11,12 +11,12 @@ namespace l4dhelper
     {
         internal MySqlQuery mysqlQuery;
 
-        public string date_time_format(DateTime dt)
+        public static string date_time_format(DateTime dt)
         {
             return dt.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        public DateTime date_time_now()
+        public static DateTime date_time_now()
         {
             TimeZoneInfo timeZoneInfo;
             DateTime dateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
@@ -33,7 +33,7 @@ namespace l4dhelper
             mysqlQuery = new MySqlQuery(mysqlClient);
         }
 
-        public bool Send(Queued queued)
+        public static bool Send(Queued queued)
         {
             string dt = date_time_format(date_time_now());
 
