@@ -33,6 +33,38 @@ namespace l4dhelper
             { }
             return trans;
         }
+
+        public static SMSQ Get()
+        {
+            string url = ApiUrl + "/api/v1/sms/get";
+            SMSQ smsq = new SMSQ();
+
+            try
+            {
+                WebClient client = new WebClient();
+                string value = client.DownloadString(url);
+                smsq = JsonConvert.DeserializeObject<SMSQ>(value);
+            }
+            catch (Exception ex)
+            { }
+            return smsq;
+        }
+
+        public static JSON_Response Update(Int64 id)
+        {
+            string url = ApiUrl + "/api/v1/sms/update/" + id;
+            JSON_Response json = new JSON_Response();
+
+            try
+            {
+                WebClient client = new WebClient();
+                string value = client.DownloadString(url);
+                json = JsonConvert.DeserializeObject<JSON_Response>(value);
+            }
+            catch (Exception ex)
+            { }
+            return json;
+        }
     }
 
     public class LoadTransaction
@@ -74,5 +106,32 @@ namespace l4dhelper
         public decimal Amount { get; set; }
         public string ProductCode { get; set; }
         public string SessionID { get; set; }
+    }
+
+    public class SMSQ
+    {
+        public int status { get; set; }
+        public string message { get; set; }
+        public int count { get; set; }
+        public List<SMSQueues> data { get; set; }
+    }
+
+    public class SMSQueues
+    {
+        public Int64 Id { get; set; }
+        public Int64 company_uid { get; set; }
+        public string user_id { get; set; }
+        public string user_ip_address { get; set; }
+        public string mobile { get; set; }
+        public string message { get; set; }
+        public int status { get; set; }
+        public DateTime updated_at { get; set; }
+        public DateTime created_at { get; set; }
+    }
+
+    public class JSON_Response
+    {
+        public int status { get; set; }
+        public string message { get; set; }
     }
 }

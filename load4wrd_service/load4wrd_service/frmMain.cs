@@ -83,6 +83,7 @@ namespace load4wrd_service
         {
             if (!IsPowerOn)
             {
+                Request.EnableSMSCommand = chkSMSCommand.Checked;
                 btnPower.Image = Resources.switch_on;
                 pbServiceStatus.Image = Resources.power_button_on;
                 lblServiceLabel.Text = "Stop Service";
@@ -128,6 +129,11 @@ namespace load4wrd_service
         {
             frmSettings settings = new frmSettings();
             settings.ShowDialog();
+        }
+
+        private void chkSMSCommand_CheckedChanged(object sender, EventArgs e)
+        {
+            Request.EnableSMSCommand = chkSMSCommand.Checked;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace load4wrd_service.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("21.21.21.120")]
         public string db_host {
             get {
                 return ((string)(this["db_host"]));
@@ -85,7 +85,7 @@ namespace load4wrd_service.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:7000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://21.21.21.120:7000")]
         public string api_webhook {
             get {
                 return ((string)(this["api_webhook"]));

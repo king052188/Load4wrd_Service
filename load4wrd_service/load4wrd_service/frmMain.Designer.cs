@@ -40,6 +40,7 @@
             this.btnPower = new System.Windows.Forms.PictureBox();
             this.lblLabelStatus = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.chkSMSCommand = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSettings)).BeginInit();
@@ -91,7 +92,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = global::load4wrd_service.Properties.Resources.line_gray;
-            this.pictureBox3.Location = new System.Drawing.Point(70, 248);
+            this.pictureBox3.Location = new System.Drawing.Point(70, 251);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(380, 2);
             this.pictureBox3.TabIndex = 5;
@@ -141,7 +142,7 @@
             // 
             // lblLabelStatus
             // 
-            this.lblLabelStatus.Location = new System.Drawing.Point(67, 259);
+            this.lblLabelStatus.Location = new System.Drawing.Point(67, 264);
             this.lblLabelStatus.Name = "lblLabelStatus";
             this.lblLabelStatus.Size = new System.Drawing.Size(383, 40);
             this.lblLabelStatus.TabIndex = 6;
@@ -151,17 +152,29 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(24, 22);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 39);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(141, 54);
+            this.pictureBox1.Size = new System.Drawing.Size(242, 54);
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
+            // 
+            // chkSMSCommand
+            // 
+            this.chkSMSCommand.AutoSize = true;
+            this.chkSMSCommand.Location = new System.Drawing.Point(16, 11);
+            this.chkSMSCommand.Name = "chkSMSCommand";
+            this.chkSMSCommand.Size = new System.Drawing.Size(190, 19);
+            this.chkSMSCommand.TabIndex = 8;
+            this.chkSMSCommand.Text = "Enable SMS Command Load";
+            this.chkSMSCommand.UseVisualStyleBackColor = true;
+            this.chkSMSCommand.CheckedChanged += new System.EventHandler(this.chkSMSCommand_CheckedChanged);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(514, 322);
+            this.Controls.Add(this.chkSMSCommand);
             this.Controls.Add(this.lblLabelStatus);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
@@ -175,11 +188,12 @@
             this.Controls.Add(this.pictureBox1);
             this.Font = new System.Drawing.Font("Lucida Sans", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MAIN";
+            this.Text = "LOAD4WRD Service";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSettings)).EndInit();
@@ -204,5 +218,6 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label lblLabelStatus;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.CheckBox chkSMSCommand;
     }
 }

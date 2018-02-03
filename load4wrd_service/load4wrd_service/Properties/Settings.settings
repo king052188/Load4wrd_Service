@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="db_host" Type="System.String" Scope="User">
-      <Value Profile="(Default)">127.0.0.1</Value>
+      <Value Profile="(Default)">21.21.21.120</Value>
     </Setting>
     <Setting Name="db_port" Type="System.String" Scope="User">
       <Value Profile="(Default)">3306</Value>
@@ -18,7 +18,7 @@
       <Value Profile="(Default)">kpadb_ptxt</Value>
     </Setting>
     <Setting Name="api_webhook" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://localhost:7000</Value>
+      <Value Profile="(Default)">http://21.21.21.120:7000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -25,6 +25,8 @@ namespace l4dhelper
 
         public static bool KeepAlive { get; set; }
 
+        public static bool EnableSMSCommand { get; set; }
+
         public static string error_message { get; set; }
 
         public static Int64 total_process { get; set; }
@@ -34,7 +36,9 @@ namespace l4dhelper
         internal Notification notification;
 
         internal Thread thread_a;
-        
+
+        internal Thread thread_sms;
+
         public Request(MySqlClient mysqlClient, string api_webhook)
         {
             mysqlQuery = new MySqlQuery(mysqlClient);
@@ -42,6 +46,8 @@ namespace l4dhelper
             notification = new Notification(mysqlClient);
 
             thread_a = new Thread(process);
+
+            thread_sms = new Thread(process_sms);
 
             Json.ApiUrl = api_webhook;
 
@@ -58,7 +64,11 @@ namespace l4dhelper
             }
 
             KeepAlive = true;
-            thread_a.Start();
+            if(EnableSMSCommand)
+            {
+                thread_a.Start();
+            }
+            thread_sms.Start();
         }
 
         public void Stop()
@@ -69,7 +79,11 @@ namespace l4dhelper
             }
 
             KeepAlive = false;
-            thread_a.Abort();
+            if (EnableSMSCommand)
+            {
+                thread_a.Abort();
+            }
+            thread_sms.Abort();
         }
 
         private void process()
@@ -78,9 +92,12 @@ namespace l4dhelper
             {
                 while (KeepAlive)
                 {
-                    System.Threading.Thread.Sleep(500);
+                    if (EnableSMSCommand)
+                    {
+                        System.Threading.Thread.Sleep(500);
 
-                    init();
+                        init();
+                    }
                 }
             }
             catch (ThreadAbortException e)
@@ -137,6 +154,92 @@ namespace l4dhelper
             }
 
             Logs(200, "Running....");
+        }
+
+        private void process_sms()
+        {
+            try
+            {
+                while (KeepAlive)
+                {
+                    System.Threading.Thread.Sleep(500);
+
+                    sms_queue_init();
+                }
+            }
+            catch (ThreadAbortException e)
+            {
+                Console.WriteLine("Exception message: {0}", e.Message);
+                Console.WriteLine("Thread Abort Exception - resetting.");
+
+                if (error_message != null)
+                {
+                    Logs(500, error_message);
+                }
+                else
+                {
+                    Logs(403, "Thread Abort Exception - Forced Stopped");
+                }
+
+                Thread.ResetAbort();
+            }
+        }
+
+        public void sms_queue_init()
+        {
+            SMSQ getQueued = Json.Get();
+
+            if (getQueued == null)
+            {
+                return;
+            }
+
+            if (getQueued.count == 0)
+            {
+                return;
+            }
+
+            int count = getQueued.count;
+            double mins = ((count * 3) / 60) + 1;
+            
+            foreach (SMSQueues objSMS in getQueued.data)
+            {
+                Console.WriteLine("{0} SMS Processing... " + objSMS.mobile);
+                
+                Queued queue = new Queued()
+                {
+                    company_uid = 0,
+                    mobile = objSMS.mobile,
+                    message = objSMS.message,
+                    status = 1
+                };
+                bool result = Notification.Send(queue);
+
+                if (result)
+                {
+                    Logs(200, string.Format("Message part 1 sent to {0}", objSMS.mobile));
+                    System.Threading.Thread.Sleep(100);
+                    JSON_Response json_r = Json.Update(objSMS.Id);
+
+                    if (json_r.status == 200)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                        string message = "NOTE: Please do not reply to dis mobile#. Unfortunately, we are unable to respond to inquiries sent to dis mobile#.";
+                        queue = new Queued()
+                        {
+                            company_uid = 0,
+                            mobile = objSMS.mobile,
+                            message = message,
+                            status = 1
+                        };
+                        result = Notification.Send(queue);
+                        Logs(200, string.Format("Message part 2 sent to {0}", objSMS.mobile));
+                    }
+
+                    string status = json_r.status == 200 ? "Successful." : "Not successful.";
+                    Console.WriteLine(status);
+                }
+            }
         }
 
         private List<Cache> get_request()
@@ -275,6 +378,8 @@ namespace l4dhelper
         public DateTime updated_at { get; set; }
         public DateTime created_at { get; set; }
     }
+
+    
 
     public class Status
     {
