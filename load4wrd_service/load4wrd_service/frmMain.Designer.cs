@@ -92,7 +92,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = global::load4wrd_service.Properties.Resources.line_gray;
-            this.pictureBox3.Location = new System.Drawing.Point(70, 251);
+            this.pictureBox3.Location = new System.Drawing.Point(69, 251);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(380, 2);
             this.pictureBox3.TabIndex = 5;

@@ -111,7 +111,7 @@ namespace l4dhelper
                 }
                 else
                 {
-                    Logs(403, "Thread Abort Exception - Forced Stopped");
+                    Logs(-200, "Service disconnected - Forced Stopped");
                 }
                 
                 Thread.ResetAbort();
@@ -178,7 +178,7 @@ namespace l4dhelper
                 }
                 else
                 {
-                    Logs(403, "Thread Abort Exception - Forced Stopped");
+                    Logs(-200, "Service disconnected - Forced Stopped");
                 }
 
                 Thread.ResetAbort();

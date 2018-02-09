@@ -16,8 +16,8 @@ namespace load4wrd_service
     {
         public delegate void RestartEventHandler(object sender, RestartArgs e);
 
-        public event RestartEventHandler RestartProceed;
-
+        public event RestartEventHandler Restart_Service;
+        
         internal Settings st;
 
         public frmSettings()
@@ -71,14 +71,18 @@ namespace load4wrd_service
                 return;
             }
 
+            if (st.api_webhook != txtWebhook.Text)
+            {
+                do_(true);
+                return;
+            }
+
             do_(false);
         }
 
         public void do_(bool is_restart)
         {
             Restart.Proceed = is_restart;
-            this.Dispose();
-            this.Close();
             if (is_restart)
             {
                 st = new Settings();
@@ -90,6 +94,9 @@ namespace load4wrd_service
                 st.api_webhook = txtWebhook.Text;
                 st.Save();
             }
+            this.Dispose();
+            this.Close();
+            Restart_Service(this, new RestartArgs());
         }
     }
 

@@ -26,7 +26,9 @@ namespace load4wrd_service
         internal Request myRequest;
 
         public static bool IsPowerOn { get; set; }
-        
+
+        public static bool IsRestarting { get; set; }
+
         public bool mysql_init()
         {
 
@@ -60,10 +62,21 @@ namespace load4wrd_service
         public void Status_Logs(object send, StatusArgs e)
         {
             Control.CheckForIllegalCrossThreadCalls = false;
+            if(e.Code == -200)
+            {
+                if(IsRestarting)
+                {
+                    IsRestarting = false;
+                    System.Threading.Thread.Sleep(1000);
+                    power();
+                    return;
+                }
+            }
             if (e.Code == 500)
             {
                 System.Threading.Thread.Sleep(1000);
                 power();
+                return;
             }
             lblLabelStatus.Invoke((MethodInvoker)(() =>
             {
@@ -77,17 +90,18 @@ namespace load4wrd_service
             InitializeComponent();
             lblLabelStatus.Text = "";
             IsPowerOn = false;
+            IsRestarting = false;
         }
         
-        public void power(bool isRestart = false)
+        public void power()
         {
             if (!IsPowerOn)
             {
+                lblLabelStatus.Text = "Service connecting...";
                 Request.EnableSMSCommand = chkSMSCommand.Checked;
                 btnPower.Image = Resources.switch_on;
                 pbServiceStatus.Image = Resources.power_button_on;
                 lblServiceLabel.Text = "Stop Service";
-                lblServiceStatus.Text = "Running";
                 IsPowerOn = true;
 
                 if (!mysql_init())
@@ -96,7 +110,6 @@ namespace load4wrd_service
                     btnPower.Image = Resources.switch_off;
                     pbServiceStatus.Image = Resources.power_button_off;
                     lblServiceLabel.Text = "Start Service";
-                    lblServiceStatus.Text = "Stopped";
                     IsPowerOn = false;
                 }
             }
@@ -110,13 +123,23 @@ namespace load4wrd_service
                     mysqlClient.Close();
                 }
                 System.Threading.Thread.Sleep(300);
-                lblLabelStatus.Text = "Service disconnected.";
 
                 btnPower.Image = Resources.switch_off;
                 pbServiceStatus.Image = Resources.power_button_off;
                 lblServiceLabel.Text = "Start Service";
-                lblServiceStatus.Text = "Stopped";
                 IsPowerOn = false;
+            }
+        }
+
+        public void restart(object send, RestartArgs e)
+        {
+            if(e.IsRestart)
+            {
+                if (IsPowerOn)
+                {
+                    IsRestarting = e.IsRestart;
+                    power();
+                }
             }
         }
 
@@ -128,6 +151,7 @@ namespace load4wrd_service
         private void btnSettings_Click(object sender, EventArgs e)
         {
             frmSettings settings = new frmSettings();
+            settings.Restart_Service += new frmSettings.RestartEventHandler(restart);
             settings.ShowDialog();
         }
 
@@ -135,5 +159,6 @@ namespace load4wrd_service
         {
             Request.EnableSMSCommand = chkSMSCommand.Checked;
         }
+        
     }
 }
