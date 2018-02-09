@@ -20,7 +20,7 @@ namespace l4dhelper
         public delegate void StatusEventHandler(object sender, StatusArgs e);
 
         public event StatusEventHandler Status_Event;
-        
+
         public static bool Die { get; set; }
 
         public static bool KeepAlive { get; set; }
@@ -38,6 +38,8 @@ namespace l4dhelper
         internal Thread thread_a;
 
         internal Thread thread_sms;
+
+        internal static bool IsRunning { get; set;}
 
         public Request(MySqlClient mysqlClient, string api_webhook)
         {
@@ -64,7 +66,8 @@ namespace l4dhelper
             }
 
             KeepAlive = true;
-            if(EnableSMSCommand)
+            IsRunning = false;
+            if (EnableSMSCommand)
             {
                 thread_a.Start();
             }
@@ -79,6 +82,7 @@ namespace l4dhelper
             }
 
             KeepAlive = false;
+            IsRunning = false;
             if (EnableSMSCommand)
             {
                 thread_a.Abort();
@@ -94,9 +98,15 @@ namespace l4dhelper
                 {
                     if (EnableSMSCommand)
                     {
-                        System.Threading.Thread.Sleep(500);
+                        System.Threading.Thread.Sleep(1000);
 
                         init();
+                    }
+
+                    if(!IsRunning)
+                    {
+                        IsRunning = true;
+                        Logs(200, "Running");
                     }
                 }
             }
@@ -162,9 +172,15 @@ namespace l4dhelper
             {
                 while (KeepAlive)
                 {
-                    System.Threading.Thread.Sleep(500);
+                    System.Threading.Thread.Sleep(5000);
 
                     sms_queue_init();
+
+                    if (!IsRunning)
+                    {
+                        IsRunning = true;
+                        Logs(200, "Running");
+                    }
                 }
             }
             catch (ThreadAbortException e)

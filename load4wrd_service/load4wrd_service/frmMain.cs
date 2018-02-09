@@ -102,6 +102,7 @@ namespace load4wrd_service
                 btnPower.Image = Resources.switch_on;
                 pbServiceStatus.Image = Resources.power_button_on;
                 lblServiceLabel.Text = "Stop Service";
+                lblServiceStatus.Text = "Running";
                 IsPowerOn = true;
 
                 if (!mysql_init())
@@ -127,6 +128,7 @@ namespace load4wrd_service
                 btnPower.Image = Resources.switch_off;
                 pbServiceStatus.Image = Resources.power_button_off;
                 lblServiceLabel.Text = "Start Service";
+                lblServiceStatus.Text = "Stopped";
                 IsPowerOn = false;
             }
         }
