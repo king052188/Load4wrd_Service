@@ -94,5 +94,17 @@ namespace load4wrd_service.Properties {
                 this["api_webhook"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string api_access_token {
+            get {
+                return ((string)(this["api_access_token"]));
+            }
+            set {
+                this["api_access_token"] = value;
+            }
+        }
     }
 }

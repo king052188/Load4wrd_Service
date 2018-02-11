@@ -11,23 +11,22 @@ namespace l4dhelper
     public class Json
     {
         public static string ApiUrl { get; set; }
-        
-        public static LoadTransaction Send(string request_type, string mobile, string network, string command)
-        {
-            string url_path = ApiUrl + "/api/v1/load/command";
-            if (request_type == "sms")
-            {
-                url_path = url_path + "/sms";
-            }
 
-            LoadTransaction trans = new LoadTransaction();
-            string url = url_path + "?mobile=" + mobile + "&network=" + network + "&command=" + command.Replace(" ", "%20");
+        public static string AccessToken { get; set; }
+
+        public static CMDTransaction Send(string account, string command)
+        {
+            CMDTransaction trans = new CMDTransaction();
+
+            string url_path = ApiUrl + "/api/v1/load/command/sms/" + AccessToken + "?";
+
+            string url = url_path + "account=" + account + "&command=" + command.Replace(" ", "%20");
 
             try
             {
                 WebClient client = new WebClient();
                 string value = client.DownloadString(url);
-                trans = JsonConvert.DeserializeObject<LoadTransaction>(value);
+                trans = JsonConvert.DeserializeObject<CMDTransaction>(value);
             }
             catch (Exception ex)
             { }
@@ -67,15 +66,11 @@ namespace l4dhelper
         }
     }
 
-    public class LoadTransaction
+    public class CMDTransaction
     {
         public int status { get; set; }
+        public string account { get; set; }
         public string message { get; set; }
-        public string facebook_id { get; set; }
-        public string reference_number { get; set; }
-        public string target_mobile { get; set; }
-        public string product_code { get; set; }
-        public decimal load_amount { get; set; }
     }
 
     public class SmartSun

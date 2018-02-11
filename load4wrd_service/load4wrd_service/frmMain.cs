@@ -53,7 +53,7 @@ namespace load4wrd_service
             Console.WriteLine("Service connection is good.");
             lblLabelStatus.Text = "Service Looks Good.";
             mysqlQuery = new MySqlQuery(mysqlClient);
-            myRequest = new Request(mysqlClient, st.api_webhook);
+            myRequest = new Request(mysqlClient, st.api_webhook, st.api_access_token);
             myRequest.Status_Event += new Request.StatusEventHandler(Status_Logs);
             myRequest.Start();
             return true;

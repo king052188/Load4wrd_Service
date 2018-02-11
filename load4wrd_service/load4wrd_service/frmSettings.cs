@@ -23,7 +23,10 @@ namespace load4wrd_service
         public frmSettings()
         {
             InitializeComponent();
-            
+        }
+
+        private void frmSettings_Load(object sender, EventArgs e)
+        {
             st = new Settings();
             txtHost.Text = st.db_host;
             txtPort.Text = st.db_port;
@@ -31,11 +34,7 @@ namespace load4wrd_service
             txtPassword.Text = st.db_password;
             txtDatabase.Text = st.db_database;
             txtWebhook.Text = st.api_webhook;
-        }
-
-        private void frmSettings_Load(object sender, EventArgs e)
-        {
-
+            txtAccessToken.Text = st.api_access_token;
         }
 
         private void frmSettings_Closing(object sender, FormClosingEventArgs e)
@@ -77,6 +76,12 @@ namespace load4wrd_service
                 return;
             }
 
+            if (st.api_access_token != txtAccessToken.Text)
+            {
+                do_(true);
+                return;
+            }
+
             do_(false);
         }
 
@@ -92,6 +97,7 @@ namespace load4wrd_service
                 st.db_password = txtPassword.Text;
                 st.db_database = txtDatabase.Text;
                 st.api_webhook = txtWebhook.Text;
+                st.api_access_token = txtAccessToken.Text;
                 st.Save();
             }
             this.Dispose();

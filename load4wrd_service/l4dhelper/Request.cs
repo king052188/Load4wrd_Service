@@ -35,23 +35,25 @@ namespace l4dhelper
 
         internal Notification notification;
 
-        internal Thread thread_a;
+        internal Thread thread_command;
 
         internal Thread thread_sms;
 
         internal static bool IsRunning { get; set;}
 
-        public Request(MySqlClient mysqlClient, string api_webhook)
+        public Request(MySqlClient mysqlClient, string api_webhook, string api_access_token)
         {
             mysqlQuery = new MySqlQuery(mysqlClient);
 
             notification = new Notification(mysqlClient);
 
-            thread_a = new Thread(process);
+            thread_command = new Thread(process_sms_commmand);
 
             thread_sms = new Thread(process_sms);
 
             Json.ApiUrl = api_webhook;
+
+            Json.AccessToken = api_access_token;
 
             Die = false;
 
@@ -69,7 +71,7 @@ namespace l4dhelper
             IsRunning = false;
             if (EnableSMSCommand)
             {
-                thread_a.Start();
+                thread_command.Start();
             }
             thread_sms.Start();
         }
@@ -85,12 +87,12 @@ namespace l4dhelper
             IsRunning = false;
             if (EnableSMSCommand)
             {
-                thread_a.Abort();
+                thread_command.Abort();
             }
             thread_sms.Abort();
         }
 
-        private void process()
+        private void process_sms_commmand()
         {
             try
             {
@@ -100,7 +102,7 @@ namespace l4dhelper
                     {
                         System.Threading.Thread.Sleep(1000);
 
-                        init();
+                        sms_queue_command_init();
                     }
 
                     if(!IsRunning)
@@ -128,7 +130,7 @@ namespace l4dhelper
             }
         }
 
-        private void init()
+        private void sms_queue_command_init()
         {
             var sw = Stopwatch.StartNew();
 
@@ -136,15 +138,13 @@ namespace l4dhelper
 
             foreach(Cache cache in requests)
             {
-                string command = "LOAD " + cache.command;
-
-                LoadTransaction tx = Json.Send("sms", cache.from, "SMART", command);
+                CMDTransaction cmd = Json.Send(cache.from, cache.command);
                 
                 Queued queue = new Queued()
                 {
                     company_uid = cache.company_uid,
-                    mobile = cache.from,
-                    message = tx.message,
+                    mobile = cmd.account,
+                    message = cmd.message,
                     status = 1
                 };
 

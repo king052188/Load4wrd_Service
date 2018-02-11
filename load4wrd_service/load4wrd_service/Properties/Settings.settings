@@ -20,5 +20,8 @@
     <Setting Name="api_webhook" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://127.0.0.1:7000</Value>
     </Setting>
+    <Setting Name="api_access_token" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

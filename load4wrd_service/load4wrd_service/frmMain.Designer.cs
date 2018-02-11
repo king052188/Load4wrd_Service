@@ -163,9 +163,9 @@
             this.chkSMSCommand.AutoSize = true;
             this.chkSMSCommand.Location = new System.Drawing.Point(16, 11);
             this.chkSMSCommand.Name = "chkSMSCommand";
-            this.chkSMSCommand.Size = new System.Drawing.Size(190, 19);
+            this.chkSMSCommand.Size = new System.Drawing.Size(157, 19);
             this.chkSMSCommand.TabIndex = 8;
-            this.chkSMSCommand.Text = "Enable SMS Command Load";
+            this.chkSMSCommand.Text = "Enable SMS Command";
             this.chkSMSCommand.UseVisualStyleBackColor = true;
             this.chkSMSCommand.CheckedChanged += new System.EventHandler(this.chkSMSCommand_CheckedChanged);
             // 
