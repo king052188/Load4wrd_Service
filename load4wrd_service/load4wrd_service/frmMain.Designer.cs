@@ -41,12 +41,17 @@
             this.lblLabelStatus = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.chkSMSCommand = new System.Windows.Forms.CheckBox();
+            this.lblSmart = new System.Windows.Forms.Label();
+            this.lblGlobe = new System.Windows.Forms.Label();
+            this.lblSun = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbServiceStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPower)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // lblServiceLabel
@@ -61,7 +66,7 @@
             // 
             // lblServiceStatus
             // 
-            this.lblServiceStatus.Location = new System.Drawing.Point(365, 206);
+            this.lblServiceStatus.Location = new System.Drawing.Point(365, 194);
             this.lblServiceStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblServiceStatus.Name = "lblServiceStatus";
             this.lblServiceStatus.Size = new System.Drawing.Size(108, 15);
@@ -71,7 +76,7 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(204, 206);
+            this.label1.Location = new System.Drawing.Point(204, 194);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(108, 15);
@@ -81,7 +86,7 @@
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(45, 206);
+            this.label2.Location = new System.Drawing.Point(45, 194);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(108, 15);
@@ -92,7 +97,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = global::load4wrd_service.Properties.Resources.line_gray;
-            this.pictureBox3.Location = new System.Drawing.Point(69, 251);
+            this.pictureBox3.Location = new System.Drawing.Point(69, 227);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(380, 2);
             this.pictureBox3.TabIndex = 5;
@@ -102,7 +107,7 @@
             // 
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Image = global::load4wrd_service.Properties.Resources.layers;
-            this.pictureBox2.Location = new System.Drawing.Point(67, 126);
+            this.pictureBox2.Location = new System.Drawing.Point(67, 122);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(64, 64);
             this.pictureBox2.TabIndex = 4;
@@ -112,7 +117,7 @@
             // 
             this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSettings.Image = global::load4wrd_service.Properties.Resources.settings_1_;
-            this.btnSettings.Location = new System.Drawing.Point(224, 126);
+            this.btnSettings.Location = new System.Drawing.Point(224, 122);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(64, 64);
             this.btnSettings.TabIndex = 3;
@@ -122,7 +127,7 @@
             // pbServiceStatus
             // 
             this.pbServiceStatus.Image = ((System.Drawing.Image)(resources.GetObject("pbServiceStatus.Image")));
-            this.pbServiceStatus.Location = new System.Drawing.Point(387, 126);
+            this.pbServiceStatus.Location = new System.Drawing.Point(387, 122);
             this.pbServiceStatus.Name = "pbServiceStatus";
             this.pbServiceStatus.Size = new System.Drawing.Size(64, 64);
             this.pbServiceStatus.TabIndex = 2;
@@ -142,9 +147,9 @@
             // 
             // lblLabelStatus
             // 
-            this.lblLabelStatus.Location = new System.Drawing.Point(67, 264);
+            this.lblLabelStatus.Location = new System.Drawing.Point(67, 235);
             this.lblLabelStatus.Name = "lblLabelStatus";
-            this.lblLabelStatus.Size = new System.Drawing.Size(383, 40);
+            this.lblLabelStatus.Size = new System.Drawing.Size(383, 33);
             this.lblLabelStatus.TabIndex = 6;
             this.lblLabelStatus.Text = "label3";
             this.lblLabelStatus.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -161,6 +166,8 @@
             // chkSMSCommand
             // 
             this.chkSMSCommand.AutoSize = true;
+            this.chkSMSCommand.Checked = true;
+            this.chkSMSCommand.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkSMSCommand.Location = new System.Drawing.Point(16, 11);
             this.chkSMSCommand.Name = "chkSMSCommand";
             this.chkSMSCommand.Size = new System.Drawing.Size(157, 19);
@@ -169,11 +176,50 @@
             this.chkSMSCommand.UseVisualStyleBackColor = true;
             this.chkSMSCommand.CheckedChanged += new System.EventHandler(this.chkSMSCommand_CheckedChanged);
             // 
+            // lblSmart
+            // 
+            this.lblSmart.Location = new System.Drawing.Point(9, 292);
+            this.lblSmart.Name = "lblSmart";
+            this.lblSmart.Size = new System.Drawing.Size(145, 13);
+            this.lblSmart.TabIndex = 9;
+            this.lblSmart.Text = "***.**";
+            // 
+            // lblGlobe
+            // 
+            this.lblGlobe.Location = new System.Drawing.Point(185, 292);
+            this.lblGlobe.Name = "lblGlobe";
+            this.lblGlobe.Size = new System.Drawing.Size(145, 13);
+            this.lblGlobe.TabIndex = 9;
+            this.lblGlobe.Text = "***.**";
+            this.lblGlobe.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblSun
+            // 
+            this.lblSun.Location = new System.Drawing.Point(359, 292);
+            this.lblSun.Name = "lblSun";
+            this.lblSun.Size = new System.Drawing.Size(145, 13);
+            this.lblSun.TabIndex = 9;
+            this.lblSun.Text = "***.**";
+            this.lblSun.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::load4wrd_service.Properties.Resources.line_gray;
+            this.pictureBox4.Location = new System.Drawing.Point(69, 273);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(380, 2);
+            this.pictureBox4.TabIndex = 10;
+            this.pictureBox4.TabStop = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(514, 322);
+            this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.lblSun);
+            this.Controls.Add(this.lblGlobe);
+            this.Controls.Add(this.lblSmart);
             this.Controls.Add(this.chkSMSCommand);
             this.Controls.Add(this.lblLabelStatus);
             this.Controls.Add(this.pictureBox3);
@@ -200,6 +246,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbServiceStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPower)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,5 +266,9 @@
         private System.Windows.Forms.Label lblLabelStatus;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox chkSMSCommand;
+        private System.Windows.Forms.Label lblSmart;
+        private System.Windows.Forms.Label lblGlobe;
+        private System.Windows.Forms.Label lblSun;
+        private System.Windows.Forms.PictureBox pictureBox4;
     }
 }

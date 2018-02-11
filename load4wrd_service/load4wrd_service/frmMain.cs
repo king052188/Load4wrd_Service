@@ -72,16 +72,38 @@ namespace load4wrd_service
                     return;
                 }
             }
+
+            if (e.Code == 220)
+            {
+                lblSmart.Invoke((MethodInvoker)(() =>
+                {
+                    lblSmart.Text = e.Smart;
+                }));
+
+                lblGlobe.Invoke((MethodInvoker)(() =>
+                {
+                    lblGlobe.Text = e.Globe;
+                }));
+
+                lblSun.Invoke((MethodInvoker)(() =>
+                {
+                    lblSun.Text = e.Sun;
+                }));
+
+                return;
+            }
             if (e.Code == 500)
             {
                 System.Threading.Thread.Sleep(1000);
                 power();
                 return;
             }
+
             lblLabelStatus.Invoke((MethodInvoker)(() =>
             {
                 lblLabelStatus.Text = e.Message;
             }));
+            
             Control.CheckForIllegalCrossThreadCalls = true;
         }
         

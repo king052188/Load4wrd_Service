@@ -33,6 +33,23 @@ namespace l4dhelper
             return trans;
         }
 
+        public static MotherWallet Wallet()
+        {
+            MotherWallet mw = new MotherWallet();
+        
+            string url = "http://api-load4wrd.kpa.ph/balance.aspx";
+
+            try
+            {
+                WebClient client = new WebClient();
+                string value = client.DownloadString(url);
+                mw = JsonConvert.DeserializeObject<MotherWallet>(value);
+            }
+            catch (Exception ex)
+            { }
+            return mw;
+        }
+
         public static SMSQ Get()
         {
             string url = ApiUrl + "/api/v1/sms/get";
@@ -128,5 +145,43 @@ namespace l4dhelper
     {
         public int status { get; set; }
         public string message { get; set; }
+    }
+
+    public class MotherWallet
+    {
+        public int Status { get; set; }
+        public string Message { get; set; }
+        public string DateTime { get; set; }
+        public SMART Smart { get; set; }
+        public GLOBE Globe { get; set; }
+        public SUNXX Sun { get; set; }
+    }
+
+    public class SMART
+    {
+        public int smartResultCode { get; set; }
+        public decimal smartCredits { get; set; }
+        public decimal smartDebits { get; set; }
+        public decimal smartBalance { get; set; }
+        public string smartResultCodeDesc { get; set; }
+        public string smartSessionID { get; set; }
+    }
+
+    public class GLOBE
+    {
+        public int globeResultCode { get; set; }
+        public string globeRequestStatus { get; set; }
+        public string globeTransactionNo { get; set; }
+        public decimal globeBalance { get; set; }
+    }
+
+    public class SUNXX
+    {
+        public int sunResultCode { get; set; }
+        public decimal sunCredits { get; set; }
+        public decimal sunDebits { get; set; }
+        public decimal sunBalance { get; set; }
+        public string sunResultCodeDesc { get; set; }
+        public string sunSessionID { get; set; }
     }
 }

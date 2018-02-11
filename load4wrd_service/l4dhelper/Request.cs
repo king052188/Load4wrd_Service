@@ -203,6 +203,14 @@ namespace l4dhelper
 
         public void sms_queue_init()
         {
+            //MotherWallet mw = Json.Wallet();
+            //Status.smart = "SMART: " + mw.Smart.smartBalance.ToString("n2");
+            //Status.globe = "GLOBE: " + mw.Globe.globeBalance.ToString("n2");
+            //Status.sunxx = "SUNXX: " + mw.Sun.sunBalance.ToString("n2");
+            //Logs(220, "");
+
+            //System.Threading.Thread.Sleep(500);
+
             SMSQ getQueued = Json.Get();
 
             if (getQueued == null)
@@ -214,9 +222,6 @@ namespace l4dhelper
             {
                 return;
             }
-
-            int count = getQueued.count;
-            double mins = ((count * 3) / 60) + 1;
             
             foreach (SMSQueues objSMS in getQueued.data)
             {
@@ -401,6 +406,9 @@ namespace l4dhelper
     {
         public static int code { get; set; }
         public static string message { get; set; }
+        public static string smart { get; set; }
+        public static string globe { get; set; }
+        public static string sunxx { get; set; }
     }
 }
 
