@@ -81,6 +81,23 @@ namespace l4dhelper
             { }
             return json;
         }
+
+        public static JSON_Response Messenger_Send(string facebook_id, string message)
+        {
+            string url = ApiUrl + "/api/v1/messenger/send/" + facebook_id + "?message=" + message;  
+
+            JSON_Response json = new JSON_Response();
+
+            try
+            {
+                WebClient client = new WebClient();
+                string value = client.DownloadString(url);
+                json = JsonConvert.DeserializeObject<JSON_Response>(value);
+            }
+            catch (Exception ex)
+            { }
+            return json;
+        }
     }
 
     public class CMDTransaction

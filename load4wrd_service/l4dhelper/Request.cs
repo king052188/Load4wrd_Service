@@ -39,6 +39,8 @@ namespace l4dhelper
 
         internal Thread thread_sms;
 
+        internal Thread thread_wallet;
+
         internal static bool IsRunning { get; set;}
 
         public Request(MySqlClient mysqlClient, string api_webhook, string api_access_token)
@@ -50,6 +52,8 @@ namespace l4dhelper
             thread_command = new Thread(process_sms_commmand);
 
             thread_sms = new Thread(process_sms);
+
+            thread_wallet = new Thread(monitor_wallet);
 
             Json.ApiUrl = api_webhook;
 
@@ -74,6 +78,7 @@ namespace l4dhelper
                 thread_command.Start();
             }
             thread_sms.Start();
+            thread_wallet.Start();
         }
 
         public void Stop()
@@ -90,8 +95,10 @@ namespace l4dhelper
                 thread_command.Abort();
             }
             thread_sms.Abort();
+            thread_wallet.Abort();
         }
 
+        // sms command
         private void process_sms_commmand()
         {
             try
@@ -105,11 +112,11 @@ namespace l4dhelper
                         sms_queue_command_init();
                     }
 
-                    if(!IsRunning)
-                    {
-                        IsRunning = true;
-                        Logs(200, "Running");
-                    }
+                    //if(!IsRunning)
+                    //{
+                    //    IsRunning = true;
+                    //    Logs(200, "Running");
+                    //}
                 }
             }
             catch (ThreadAbortException e)
@@ -163,9 +170,10 @@ namespace l4dhelper
                 Logs(200, string.Format("Batch: {0} and Time Executed {1} seconds", total_process, total_time_in_seconds));
             }
 
-            Logs(200, "Running....");
+            //Logs(200, "Running....");
         }
 
+        // sms forward or send it
         private void process_sms()
         {
             try
@@ -176,11 +184,11 @@ namespace l4dhelper
 
                     sms_queue_init();
 
-                    if (!IsRunning)
-                    {
-                        IsRunning = true;
-                        Logs(200, "Running");
-                    }
+                    //if (!IsRunning)
+                    //{
+                    //    IsRunning = true;
+                    //    Logs(200, "Running");
+                    //}
                 }
             }
             catch (ThreadAbortException e)
@@ -203,14 +211,6 @@ namespace l4dhelper
 
         public void sms_queue_init()
         {
-            //MotherWallet mw = Json.Wallet();
-            //Status.smart = "SMART: " + mw.Smart.smartBalance.ToString("n2");
-            //Status.globe = "GLOBE: " + mw.Globe.globeBalance.ToString("n2");
-            //Status.sunxx = "SUNXX: " + mw.Sun.sunBalance.ToString("n2");
-            //Logs(220, "");
-
-            //System.Threading.Thread.Sleep(500);
-
             SMSQ getQueued = Json.Get();
 
             if (getQueued == null)
@@ -299,6 +299,40 @@ namespace l4dhelper
             return caches;
         }
 
+        // monitor wallet
+        private void monitor_wallet()
+        {
+            try
+            {
+                while (KeepAlive)
+                {
+                    System.Threading.Thread.Sleep(5000);
+
+                    MotherWallet mw = Json.Wallet();
+                    Status.smart = "SMART: " + mw.Smart.smartBalance.ToString("n2");
+                    Status.globe = "GLOBE: " + mw.Globe.globeBalance.ToString("n2");
+                    Status.sunxx = "SUNXX: " + mw.Sun.sunBalance.ToString("n2");
+                    Logs(220, "");
+                }
+            }
+            catch (ThreadAbortException e)
+            {
+                Console.WriteLine("Exception message: {0}", e.Message);
+                Console.WriteLine("Thread Abort Exception - resetting.");
+                if (error_message != null)
+                {
+                    Logs(500, error_message);
+                }
+                else
+                {
+                    Logs(-200, "Service disconnected - Forced Stopped");
+                }
+                Thread.ResetAbort();
+            }
+        }
+
+
+        // logs update
         public void Logs(int code, string message)
         {
             Status.code = code;
@@ -306,6 +340,7 @@ namespace l4dhelper
             Status_Event(this, new StatusArgs());
         }
 
+        // check prefix
         public static string prefixes(string number)
         {
             string net = "INVALID";
