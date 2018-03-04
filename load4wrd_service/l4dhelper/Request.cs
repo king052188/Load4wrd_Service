@@ -222,8 +222,7 @@ namespace l4dhelper
             {
                 return;
             }
-
-            int total_sent = 0;
+            
             foreach (SMSQueues objSMS in getQueued.data)
             {
                 Console.WriteLine("{0} SMS Processing... " + objSMS.mobile);
