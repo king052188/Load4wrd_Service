@@ -53,7 +53,7 @@ namespace l4dhelper
 
             thread_sms = new Thread(process_sms);
 
-            thread_wallet = new Thread(monitor_wallet);
+            //thread_wallet = new Thread(monitor_wallet);
 
             Json.ApiUrl = api_webhook;
 
@@ -78,7 +78,7 @@ namespace l4dhelper
                 thread_command.Start();
             }
             thread_sms.Start();
-            thread_wallet.Start();
+            //thread_wallet.Start();
         }
 
         public void Stop()
@@ -95,7 +95,7 @@ namespace l4dhelper
                 thread_command.Abort();
             }
             thread_sms.Abort();
-            thread_wallet.Abort();
+            //thread_wallet.Abort();
         }
 
         // sms command
@@ -222,7 +222,8 @@ namespace l4dhelper
             {
                 return;
             }
-            
+
+            int total_sent = 0;
             foreach (SMSQueues objSMS in getQueued.data)
             {
                 Console.WriteLine("{0} SMS Processing... " + objSMS.mobile);
@@ -238,26 +239,29 @@ namespace l4dhelper
 
                 if (result)
                 {
-                    Logs(200, string.Format("Message part 1 sent to {0}", objSMS.mobile));
-                    System.Threading.Thread.Sleep(100);
-                    JSON_Response json_r = Json.Update(objSMS.Id);
+                    Logs(200, string.Format("{0} | Message Sent to {1}", objSMS.Id, objSMS.mobile));
 
-                    if (json_r.status == 200)
-                    {
-                        System.Threading.Thread.Sleep(100);
-                        string message = "NOTE: Please do not reply to dis mobile#. Unfortunately, we are unable to respond to inquiries sent to dis mobile#.";
-                        queue = new Queued()
-                        {
-                            company_uid = 0,
-                            mobile = objSMS.mobile,
-                            message = message,
-                            status = 1
-                        };
-                        result = Notification.Send(queue);
-                        Logs(200, string.Format("Message part 2 sent to {0}", objSMS.mobile));
-                    }
+                    System.Threading.Thread.Sleep(1500);
+
+                    JSON_Response json_r = Json.Update(objSMS.Id);
+                    
+                    //if (json_r.status == 200)
+                    //{
+                    //    System.Threading.Thread.Sleep(100);
+                    //    string message = "NOTE: Please do not reply to dis mobile#. Unfortunately, we are unable to respond to inquiries sent to dis mobile#.";
+                    //    queue = new Queued()
+                    //    {
+                    //        company_uid = 0,
+                    //        mobile = objSMS.mobile,
+                    //        message = message,
+                    //        status = 1
+                    //    };
+                    //    result = Notification.Send(queue);
+                    //    Logs(200, string.Format("Message part 2 sent to {0}", objSMS.mobile));
+                    //}
 
                     string status = json_r.status == 200 ? "Successful." : "Not successful.";
+
                     Console.WriteLine(status);
                 }
             }
