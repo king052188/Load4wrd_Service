@@ -27,6 +27,8 @@ namespace l4dhelper
 
         public static bool EnableSMSCommand { get; set; }
 
+        public static bool EnableReceiverOnly { get; set; }
+
         public static string error_message { get; set; }
 
         public static Int64 total_process { get; set; }
@@ -77,7 +79,11 @@ namespace l4dhelper
             {
                 thread_command.Start();
             }
-            thread_sms.Start();
+
+            if (!EnableReceiverOnly)
+            {
+                thread_sms.Start();
+            }
             //thread_wallet.Start();
         }
 
@@ -111,12 +117,6 @@ namespace l4dhelper
 
                         sms_queue_command_init();
                     }
-
-                    //if(!IsRunning)
-                    //{
-                    //    IsRunning = true;
-                    //    Logs(200, "Running");
-                    //}
                 }
             }
             catch (ThreadAbortException e)
@@ -146,28 +146,35 @@ namespace l4dhelper
             foreach(Cache cache in requests)
             {
                 CMDTransaction cmd = Json.Send(cache.from, cache.command);
-                
-                Queued queue = new Queued()
+
+                if(EnableReceiverOnly)
                 {
-                    company_uid = cache.company_uid,
-                    mobile = cmd.account,
-                    message = cmd.message,
-                    status = 1
-                };
+                    Logs(200, string.Format("Response: {0} -> {1}", cmd.account, cmd.message));
+                }
+                else
+                {
+                    Queued queue = new Queued()
+                    {
+                        company_uid = cache.company_uid,
+                        mobile = cmd.account,
+                        message = cmd.message,
+                        status = 1
+                    };
 
-                bool save_notification = Notification.Send(queue);
+                    bool save_notification = Notification.Send(queue);
 
-                bool delete_cache = MySqlQuery.execute("DELETE FROM ptxt_cache WHERE Id = " + cache.Id + ";");
+                    bool delete_cache = MySqlQuery.execute("DELETE FROM ptxt_cache WHERE Id = " + cache.Id + ";");
 
-                total_process++;
+                    total_process++;
 
-                sw.Stop();
+                    sw.Stop();
 
-                decimal total_time_in_seconds = sw.ElapsedMilliseconds / 60;
+                    decimal total_time_in_seconds = sw.ElapsedMilliseconds / 60;
 
-                Console.WriteLine("Batch: {0} and Time Executed {1} seconds", total_process, total_time_in_seconds);
+                    Console.WriteLine("Batch: {0} and Time Executed {1} seconds", total_process, total_time_in_seconds);
 
-                Logs(200, string.Format("Batch: {0} and Time Executed {1} seconds", total_process, total_time_in_seconds));
+                    Logs(200, string.Format("Batch: {0} and Time Executed {1} seconds", total_process, total_time_in_seconds));
+                }
             }
 
             //Logs(200, "Running....");
@@ -180,15 +187,12 @@ namespace l4dhelper
             {
                 while (KeepAlive)
                 {
-                    System.Threading.Thread.Sleep(5000);
+                    if (!EnableReceiverOnly)
+                    {
+                        System.Threading.Thread.Sleep(5000);
 
-                    sms_queue_init();
-
-                    //if (!IsRunning)
-                    //{
-                    //    IsRunning = true;
-                    //    Logs(200, "Running");
-                    //}
+                        sms_queue_init();
+                    }
                 }
             }
             catch (ThreadAbortException e)
@@ -437,9 +441,7 @@ namespace l4dhelper
         public DateTime updated_at { get; set; }
         public DateTime created_at { get; set; }
     }
-
     
-
     public class Status
     {
         public static int code { get; set; }
