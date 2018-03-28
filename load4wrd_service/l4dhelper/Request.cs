@@ -150,6 +150,8 @@ namespace l4dhelper
                 if(EnableReceiverOnly)
                 {
                     Logs(200, string.Format("Response: {0} -> {1}", cmd.account, cmd.message));
+
+                    bool delete_cache = MySqlQuery.execute("DELETE FROM ptxt_cache WHERE Id = " + cache.Id + ";");
                 }
                 else
                 {

@@ -21,6 +21,11 @@ namespace l4dhelper
             string url_path = ApiUrl + "/api/v1/load/command/sms/" + AccessToken + "?";
 
             string url = url_path + "account=" + account + "&command=" + command.Replace(" ", "%20");
+            
+            if (Request.EnableReceiverOnly)
+            {
+                url += "&method=1";
+            }
 
             try
             {

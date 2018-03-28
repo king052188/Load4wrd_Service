@@ -73,7 +73,7 @@
             // 
             // lblServiceStatus
             // 
-            this.lblServiceStatus.Location = new System.Drawing.Point(365, 194);
+            this.lblServiceStatus.Location = new System.Drawing.Point(365, 196);
             this.lblServiceStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblServiceStatus.Name = "lblServiceStatus";
             this.lblServiceStatus.Size = new System.Drawing.Size(108, 15);
@@ -83,7 +83,7 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(204, 194);
+            this.label1.Location = new System.Drawing.Point(204, 196);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(108, 15);
@@ -93,7 +93,7 @@
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(45, 194);
+            this.label2.Location = new System.Drawing.Point(45, 196);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(108, 15);
@@ -104,7 +104,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = global::load4wrd_service.Properties.Resources.line_gray;
-            this.pictureBox3.Location = new System.Drawing.Point(69, 227);
+            this.pictureBox3.Location = new System.Drawing.Point(69, 232);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(380, 2);
             this.pictureBox3.TabIndex = 5;
@@ -114,7 +114,7 @@
             // 
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Image = global::load4wrd_service.Properties.Resources.layers;
-            this.pictureBox2.Location = new System.Drawing.Point(67, 122);
+            this.pictureBox2.Location = new System.Drawing.Point(67, 121);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(64, 64);
             this.pictureBox2.TabIndex = 4;
@@ -124,7 +124,7 @@
             // 
             this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSettings.Image = global::load4wrd_service.Properties.Resources.settings_1_;
-            this.btnSettings.Location = new System.Drawing.Point(224, 122);
+            this.btnSettings.Location = new System.Drawing.Point(224, 121);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(64, 64);
             this.btnSettings.TabIndex = 3;
@@ -134,7 +134,7 @@
             // pbServiceStatus
             // 
             this.pbServiceStatus.Image = ((System.Drawing.Image)(resources.GetObject("pbServiceStatus.Image")));
-            this.pbServiceStatus.Location = new System.Drawing.Point(387, 122);
+            this.pbServiceStatus.Location = new System.Drawing.Point(387, 121);
             this.pbServiceStatus.Name = "pbServiceStatus";
             this.pbServiceStatus.Size = new System.Drawing.Size(64, 64);
             this.pbServiceStatus.TabIndex = 2;
@@ -154,7 +154,7 @@
             // 
             // lblLabelStatus
             // 
-            this.lblLabelStatus.Location = new System.Drawing.Point(67, 235);
+            this.lblLabelStatus.Location = new System.Drawing.Point(67, 245);
             this.lblLabelStatus.Name = "lblLabelStatus";
             this.lblLabelStatus.Size = new System.Drawing.Size(383, 33);
             this.lblLabelStatus.TabIndex = 6;
@@ -177,6 +177,7 @@
             this.lblSmart.Size = new System.Drawing.Size(145, 13);
             this.lblSmart.TabIndex = 9;
             this.lblSmart.Text = "***.**";
+            this.lblSmart.Visible = false;
             // 
             // lblGlobe
             // 
@@ -186,6 +187,7 @@
             this.lblGlobe.TabIndex = 9;
             this.lblGlobe.Text = "***.**";
             this.lblGlobe.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblGlobe.Visible = false;
             // 
             // lblSun
             // 
@@ -195,6 +197,7 @@
             this.lblSun.TabIndex = 9;
             this.lblSun.Text = "***.**";
             this.lblSun.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblSun.Visible = false;
             // 
             // pictureBox4
             // 
@@ -204,6 +207,7 @@
             this.pictureBox4.Size = new System.Drawing.Size(380, 2);
             this.pictureBox4.TabIndex = 10;
             this.pictureBox4.TabStop = false;
+            this.pictureBox4.Visible = false;
             // 
             // label3
             // 

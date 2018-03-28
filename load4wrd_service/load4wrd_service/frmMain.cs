@@ -35,6 +35,7 @@ namespace load4wrd_service
 
         public bool mysql_init()
         {
+            string guid = Guid.NewGuid().ToString();
 
             lblLabelStatus.Text = "Service connecting...";
             st = new Settings();
