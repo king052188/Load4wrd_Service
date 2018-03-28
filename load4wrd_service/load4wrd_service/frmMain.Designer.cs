@@ -40,11 +40,14 @@
             this.btnPower = new System.Windows.Forms.PictureBox();
             this.lblLabelStatus = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.chkSMSCommand = new System.Windows.Forms.CheckBox();
             this.lblSmart = new System.Windows.Forms.Label();
             this.lblGlobe = new System.Windows.Forms.Label();
             this.lblSun = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnSMSCmd = new System.Windows.Forms.PictureBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnReceiveOnly = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSettings)).BeginInit();
@@ -52,17 +55,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.btnPower)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSMSCmd)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnReceiveOnly)).BeginInit();
             this.SuspendLayout();
             // 
             // lblServiceLabel
             // 
             this.lblServiceLabel.AutoSize = true;
+            this.lblServiceLabel.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblServiceLabel.Location = new System.Drawing.Point(386, 12);
             this.lblServiceLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblServiceLabel.Name = "lblServiceLabel";
-            this.lblServiceLabel.Size = new System.Drawing.Size(81, 15);
+            this.lblServiceLabel.Size = new System.Drawing.Size(77, 14);
             this.lblServiceLabel.TabIndex = 1;
             this.lblServiceLabel.Text = "Start Service";
+            this.lblServiceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblServiceStatus
             // 
@@ -140,7 +147,7 @@
             this.btnPower.Location = new System.Drawing.Point(471, 5);
             this.btnPower.Margin = new System.Windows.Forms.Padding(2);
             this.btnPower.Name = "btnPower";
-            this.btnPower.Size = new System.Drawing.Size(33, 35);
+            this.btnPower.Size = new System.Drawing.Size(33, 25);
             this.btnPower.TabIndex = 0;
             this.btnPower.TabStop = false;
             this.btnPower.Click += new System.EventHandler(this.btnPower_Click);
@@ -157,24 +164,11 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 39);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 16);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(242, 54);
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
-            // 
-            // chkSMSCommand
-            // 
-            this.chkSMSCommand.AutoSize = true;
-            this.chkSMSCommand.Checked = true;
-            this.chkSMSCommand.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSMSCommand.Location = new System.Drawing.Point(16, 11);
-            this.chkSMSCommand.Name = "chkSMSCommand";
-            this.chkSMSCommand.Size = new System.Drawing.Size(157, 19);
-            this.chkSMSCommand.TabIndex = 8;
-            this.chkSMSCommand.Text = "Enable SMS Command";
-            this.chkSMSCommand.UseVisualStyleBackColor = true;
-            this.chkSMSCommand.CheckedChanged += new System.EventHandler(this.chkSMSCommand_CheckedChanged);
             // 
             // lblSmart
             // 
@@ -211,16 +205,67 @@
             this.pictureBox4.TabIndex = 10;
             this.pictureBox4.TabStop = false;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(375, 37);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(88, 14);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "SMS Command";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnSMSCmd
+            // 
+            this.btnSMSCmd.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSMSCmd.Image = global::load4wrd_service.Properties.Resources.switch_off;
+            this.btnSMSCmd.Location = new System.Drawing.Point(471, 30);
+            this.btnSMSCmd.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSMSCmd.Name = "btnSMSCmd";
+            this.btnSMSCmd.Size = new System.Drawing.Size(33, 25);
+            this.btnSMSCmd.TabIndex = 11;
+            this.btnSMSCmd.TabStop = false;
+            this.btnSMSCmd.Click += new System.EventHandler(this.btnSMSCmd_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(382, 62);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(81, 14);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Receiver Only";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnReceiveOnly
+            // 
+            this.btnReceiveOnly.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnReceiveOnly.Image = global::load4wrd_service.Properties.Resources.switch_off;
+            this.btnReceiveOnly.Location = new System.Drawing.Point(471, 55);
+            this.btnReceiveOnly.Margin = new System.Windows.Forms.Padding(2);
+            this.btnReceiveOnly.Name = "btnReceiveOnly";
+            this.btnReceiveOnly.Size = new System.Drawing.Size(33, 25);
+            this.btnReceiveOnly.TabIndex = 13;
+            this.btnReceiveOnly.TabStop = false;
+            this.btnReceiveOnly.Click += new System.EventHandler(this.btnReceiveOnly_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(514, 322);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.btnReceiveOnly);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnSMSCmd);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.lblSun);
             this.Controls.Add(this.lblGlobe);
             this.Controls.Add(this.lblSmart);
-            this.Controls.Add(this.chkSMSCommand);
             this.Controls.Add(this.lblLabelStatus);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
@@ -247,6 +292,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.btnPower)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSMSCmd)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnReceiveOnly)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,10 +312,13 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label lblLabelStatus;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.CheckBox chkSMSCommand;
         private System.Windows.Forms.Label lblSmart;
         private System.Windows.Forms.Label lblGlobe;
         private System.Windows.Forms.Label lblSun;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox btnSMSCmd;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox btnReceiveOnly;
     }
 }

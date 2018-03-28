@@ -27,6 +27,10 @@ namespace load4wrd_service
 
         public static bool IsPowerOn { get; set; }
 
+        public static bool IsSMSCMD { get; set; }
+
+        public static bool IsReceiverOnly { get; set; }
+
         public static bool IsRestarting { get; set; }
 
         public bool mysql_init()
@@ -120,7 +124,7 @@ namespace load4wrd_service
             if (!IsPowerOn)
             {
                 lblLabelStatus.Text = "Service connecting...";
-                Request.EnableSMSCommand = chkSMSCommand.Checked;
+                Request.EnableSMSCommand = IsSMSCMD;
                 btnPower.Image = Resources.switch_on;
                 pbServiceStatus.Image = Resources.power_button_on;
                 lblServiceLabel.Text = "Stop Service";
@@ -178,11 +182,35 @@ namespace load4wrd_service
             settings.Restart_Service += new frmSettings.RestartEventHandler(restart);
             settings.ShowDialog();
         }
-
-        private void chkSMSCommand_CheckedChanged(object sender, EventArgs e)
-        {
-            Request.EnableSMSCommand = chkSMSCommand.Checked;
-        }
         
+        private void btnSMSCmd_Click(object sender, EventArgs e)
+        {
+            if(IsSMSCMD)
+            {
+                btnSMSCmd.Image = Resources.switch_off;
+                IsSMSCMD = false;
+            }
+            else
+            {
+                btnSMSCmd.Image = Resources.switch_on;
+                IsSMSCMD = true;
+            }
+            Request.EnableSMSCommand = IsSMSCMD;
+        }
+
+        private void btnReceiveOnly_Click(object sender, EventArgs e)
+        {
+            if (!IsReceiverOnly)
+            {
+                btnReceiveOnly.Image = Resources.switch_on;
+                IsReceiverOnly = true;
+            }
+            else
+            {
+                btnReceiveOnly.Image = Resources.switch_off;
+                IsReceiverOnly = false;
+            }
+            Request.EnableReceiverOnly = IsReceiverOnly;
+        }
     }
 }
